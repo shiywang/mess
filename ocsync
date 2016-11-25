@@ -1,0 +1,34 @@
+#!/bin/bash
+
+shell=`echo $SHELL`
+libkey=~/libra-new.pem
+config=~/.zshrc
+bundle=~/oc_client_bundle
+
+if [ "$1" == "init" ] 
+then 
+  sudo mkdir $bundle
+  echo "writing value to $config"
+  echo "alias oc='\$OC'" >> $config
+  echo "export OC_DEFAULT='/usr/bin/oc'" >> $config
+  echo "export OC=\$OC_DEFAULT" >> $config
+  source $config
+fi
+
+if [ "$1" == "sync" ] 
+then 
+  echo "scp oc from $3 to $bundle"
+  sudo scp -i $libkey root@$3:/usr/local/bin/oc $bundle/oc_$2
+  echo "Done.. rename oc_$2"
+  echo "export OC_$2='$bundle/oc_$2'" >> $config
+  echo "alias oc$2='export OC=$OC_$2'" >> $config
+  source $config
+  echo -e "Now you can input command:\n"
+  echo -e "    \$oc$2\n"
+  echo "to switch oc version..."
+fi
+
+if [ "$1" == "clean" ] 
+then 
+  sudo rm $bundle/oc_$2
+fi
