@@ -1,0 +1,5 @@
+grep -B1 -i optional /etc/yum.repos.d/*
+yum-config-manager --enable rhel-7-workstation-optional-rpms
+sudo yum makecache
+yum install ruby-devel
+
