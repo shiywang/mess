@@ -1,4 +1,4 @@
-FROM docker-registry.engineering.redhat.com/aosqe/cucushift-base:test
+FROM docker-registry.engineering.redhat.com/aosqe/cucushift-base-20170922:latest
 
 USER root
 RUN curl http://download-node-02.eng.bos.redhat.com/rcm-guest/puddles/RHAOS/AtomicOpenShift/3.7/latest/puddle.repo -o /etc/yum.repos.d/puddle.repo && \
